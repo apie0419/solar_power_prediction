@@ -2,3 +2,4 @@ data/nwp
 data/solar
 Output
 *.dat
+__init__/
