@@ -36,7 +36,7 @@ regr = xgb.XGBRegressor(
 regr.fit(np.array(train_data), np.array(train_target))
 
 #預測
-ori_preds = np.array(test_data)[:, -1]
+ori_preds = np.array(test_data)[:, 0]
 ori_target = np.array(test_target)
 ori_deno = np.where(ori_target==0, 1, ori_target)
 
@@ -67,8 +67,9 @@ print ("Test MAPE = ")
 print("{:.2f}%".format((abs(target - preds)/deno).mean() * 100))
 
 pd.DataFrame({
-    "predict": preds,
-    "target": target
+    "nwp": ori_preds[:37],
+    "predict": preds[:37],
+    "target": target[:37]
 }).plot()
 
 plt.savefig(os.path.join(base_path, "Output/nwp_xgboost_evaluation.png"))

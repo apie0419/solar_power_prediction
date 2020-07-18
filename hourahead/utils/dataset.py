@@ -7,13 +7,13 @@ class Dataset(object):
     def __init__(self, path, timesteps):
         self.data_path = path
         self.timesteps = timesteps
-        self.train_data_raw = pd.read_excel(os.path.join(path, "hour_ahead/train_in.xlsx")).values
-        self.train_target_raw = pd.read_excel(os.path.join(path, "hour_ahead/train_out.xlsx")).values
-        self.test_data_raw = pd.read_excel(os.path.join(path, "hour_ahead/test_in.xlsx")).values
-        self.test_target_raw = pd.read_excel(os.path.join(path, "hour_ahead/test_out.xlsx")).values
+        self.train_data_raw = pd.read_excel(os.path.join(path, "train_in.xlsx")).values
+        self.train_target_raw = pd.read_excel(os.path.join(path, "train_out.xlsx"), header=None).values
+        self.test_data_raw = pd.read_excel(os.path.join(path, "test_in.xlsx")).values
+        self.test_target_raw = pd.read_excel(os.path.join(path, "test_out.xlsx"), header=None).values
         self.train_data, self.train_target = self.process_train()
         self.test_data, self.test_target = self.process_test()
-        min_max = pd.read_excel(os.path.join(self.data_path, "hour_ahead/max_min.xls"))
+        min_max = pd.read_excel(os.path.join(self.data_path, "max_min.xls"))
         self._min = float(min_max["pmin"][0])
         self._max = float(round(min_max["pmax"][0], 2))
     

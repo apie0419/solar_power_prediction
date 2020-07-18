@@ -3,3 +3,4 @@ data/solar
 Output
 *.dat
 __init__/
+__pycache__

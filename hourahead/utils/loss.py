@@ -6,3 +6,6 @@ def rmse(x, y):
     rm = tf.reduce_mean(sq)
 
     return tf.sqrt(rm)
+
+def mape(x, y):
+    return tf.keras.losses.mean_absolute_percentage_error(y, x)
