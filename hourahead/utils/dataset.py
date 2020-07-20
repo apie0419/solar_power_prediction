@@ -1,6 +1,8 @@
 import os
 import pandas as pd
-import numpy as np
+import torch
+
+from torch.utils.data.dataset import Dataset
 
 class Dataset(object):
     
@@ -13,37 +15,66 @@ class Dataset(object):
         self.test_target_raw = pd.read_excel(os.path.join(path, "test_out.xlsx"), header=None).values
         self.train_data, self.train_target = self.process_train()
         self.test_data, self.test_target = self.process_test()
-        min_max = pd.read_excel(os.path.join(self.data_path, "max_min.xls"))
-        self._min = float(min_max["pmin"][0])
-        self._max = float(round(min_max["pmax"][0], 2))
     
     def process_train(self):
-        train_data, temp_row = list(), list()
-        for i in range(len(self.train_data_raw) - (self.timesteps - 1)):
-            for j in range(self.timesteps):
-                temp_row.append(list(self.train_data_raw[i + j]))
-            
-            train_data.append(temp_row)
-            temp_row = list()
-        
-        train_target = self.train_target_raw[self.timesteps-1:]
+        train_data, train_target = list(), list()
 
+        for i in range(0, len(self.train_data_raw), 9):
+            for j in range(self.timesteps - 1, 8):
+                temp_row = list()
+                for k in range(0, self.timesteps):
+                    temp_row.append(self.train_data_raw[i + j - k])
+                
+                train_data.append(temp_row)
+                train_target.append(self.train_target_raw[i + j])
+        
         return train_data, train_target
+        # train_data, temp_row = list(), list()
+        # for i in range(len(self.train_data_raw) - (self.timesteps - 1)):
+        #     for j in range(self.timesteps):
+        #         temp_row.append(list(self.train_data_raw[i + j]))
+            
+        #     train_data.append(temp_row)
+        #     temp_row = list()
+        
+        # train_target = self.train_target_raw[self.timesteps-1:]
+
+        # return train_data, train_target
 
     def process_test(self):
-        test_data, temp_row = list(), list()
-        for i in range(len(self.test_data_raw) - (self.timesteps - 1)):
-            for j in range(self.timesteps):
-                temp_row.append(list(self.test_data_raw[i + j]))
+        # test_data, temp_row = list(), list()
+        # for i in range(len(self.test_data_raw) - (self.timesteps - 1)):
+        #     for j in range(self.timesteps):
+        #         temp_row.append(list(self.test_data_raw[i + j]))
             
-            test_data.append(temp_row)
-            temp_row = list()
+        #     test_data.append(temp_row)
+        #     temp_row = list()
         
-        test_target = self.test_target_raw[self.timesteps-1:]
+        # test_target = self.test_target_raw[self.timesteps-1:]
+
+        # return test_data, test_target
+        test_data, test_target = list(), list()
+
+        for i in range(0, len(self.test_data_raw), 9):
+            for j in range(self.timesteps - 1, 8):
+                temp_row = list()
+                for k in range(0, self.timesteps):
+                    temp_row.append(self.test_data_raw[i + j - k])
+                
+                test_data.append(temp_row)
+                test_target.append(self.test_target_raw[i + j])
+
 
         return test_data, test_target
-
-    def append(self, dataset):
-        pass
     
     
+class energyDataset(Dataset):
+    def __init__(self, data, target):
+        self.data = data
+        self.target = target
+        
+    def __getitem__(self, index):
+        return torch.from_numpy(self.data[index]).float(), torch.from_numpy(self.target[index]).float()
+        
+    def __len__(self):
+        return len(self.data)
