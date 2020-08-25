@@ -15,8 +15,8 @@ learning_rate = 0.002
 n_layers      = 3
 epoches       = 500
 output_dims   = 1
-timesteps     = 3
-num_input     = 8
+timesteps     = 24
+num_input     = 60
 
 torch.cuda.set_device(GPU)
 

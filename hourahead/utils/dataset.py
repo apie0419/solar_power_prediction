@@ -9,9 +9,9 @@ class Dataset(object):
     def __init__(self, path, timesteps):
         self.data_path = path
         self.timesteps = timesteps
-        self.train_data_raw = pd.read_excel(os.path.join(path, "train_in.xlsx")).values
+        self.train_data_raw = pd.read_excel(os.path.join(path, "train_in.xlsx"), header=None).values
         self.train_target_raw = pd.read_excel(os.path.join(path, "train_out.xlsx"), header=None).values
-        self.test_data_raw = pd.read_excel(os.path.join(path, "test_in.xlsx")).values
+        self.test_data_raw = pd.read_excel(os.path.join(path, "test_in.xlsx"), header=None).values
         self.test_target_raw = pd.read_excel(os.path.join(path, "test_out.xlsx"), header=None).values
         self.train_data, self.train_target = self.process_train()
         self.test_data, self.test_target = self.process_test()
@@ -19,8 +19,8 @@ class Dataset(object):
     def process_train(self):
         train_data, train_target = list(), list()
 
-        for i in range(0, len(self.train_data_raw), 9):
-            for j in range(self.timesteps - 1, 8):
+        for i in range(24, len(self.train_data_raw), 24):
+            for j in range(7, 16):
                 temp_row = list()
                 for k in range(0, self.timesteps):
                     temp_row.append(self.train_data_raw[i + j - k])
@@ -29,41 +29,19 @@ class Dataset(object):
                 train_target.append(self.train_target_raw[i + j])
         
         return train_data, train_target
-        # train_data, temp_row = list(), list()
-        # for i in range(len(self.train_data_raw) - (self.timesteps - 1)):
-        #     for j in range(self.timesteps):
-        #         temp_row.append(list(self.train_data_raw[i + j]))
-            
-        #     train_data.append(temp_row)
-        #     temp_row = list()
-        
-        # train_target = self.train_target_raw[self.timesteps-1:]
-
-        # return train_data, train_target
 
     def process_test(self):
-        # test_data, temp_row = list(), list()
-        # for i in range(len(self.test_data_raw) - (self.timesteps - 1)):
-        #     for j in range(self.timesteps):
-        #         temp_row.append(list(self.test_data_raw[i + j]))
-            
-        #     test_data.append(temp_row)
-        #     temp_row = list()
         
-        # test_target = self.test_target_raw[self.timesteps-1:]
-
-        # return test_data, test_target
         test_data, test_target = list(), list()
 
-        for i in range(0, len(self.test_data_raw), 9):
-            for j in range(self.timesteps - 1, 8):
+        for i in range(24, len(self.test_data_raw), 24):
+            for j in range(7, 16):
                 temp_row = list()
                 for k in range(0, self.timesteps):
                     temp_row.append(self.test_data_raw[i + j - k])
                 
                 test_data.append(temp_row)
                 test_target.append(self.test_target_raw[i + j])
-
 
         return test_data, test_target
     

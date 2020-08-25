@@ -18,11 +18,11 @@ batch_size    = 64
 hidden_units  = 12
 dropout       = 0.1
 epochs        = 500
-ksize         = 2
+ksize         = 3
 levels        = 5
 n_classes     = 1
-timesteps     = 3
-num_input     = 8
+timesteps     = 24
+num_input     = 60
 global_step   = tf.Variable(0, trainable=False)
 l2_lambda     = 0
 starter_learning_rate = 0.002
