@@ -8,7 +8,7 @@ from tpalstm import TPALSTM
 import torch, torch.nn.functional as F
 import os, pandas as pd, numpy as np
 
-GPU           = 6
+GPU           = 0
 batch_size    = 64
 hidden_units  = 12
 learning_rate = 0.002
@@ -16,7 +16,7 @@ n_layers      = 3
 epoches       = 500
 output_dims   = 1
 timesteps     = 24
-num_input     = 60
+num_input     = 6
 
 torch.cuda.set_device(GPU)
 
@@ -55,7 +55,6 @@ for epoch in pbar:
         loss.backward()
         optimizer.step()
         train_loss += loss.item() * data.size(0)
-
     train_loss /= len(trainloader.dataset)
     train_loss = round(np.sqrt(train_loss), 4)
     losses.append(train_loss)

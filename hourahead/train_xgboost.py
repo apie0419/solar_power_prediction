@@ -11,7 +11,7 @@ base_path = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_path, "../data/solar")
 
 timesteps = 24
-num_input = 60
+num_input = 6
 num_output = 1
 
 dataset = Dataset(data_path, timesteps)

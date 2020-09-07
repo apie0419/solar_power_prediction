@@ -2,7 +2,7 @@ from scipy.fftpack import fft
 import pandas as pd, numpy as np, os
 
 base_path = os.path.dirname(os.path.abspath(__file__))
-data_path = os.path.join(base_path, "../data/19610011031")
+data_path = os.path.join(base_path, "../data/12053002165")
 output_path = os.path.join(base_path, "../data/solar")
 
 if not os.path.exists(output_path):
@@ -16,23 +16,33 @@ test_target_raw = pd.read_excel(os.path.join(data_path, "test_out.xlsx"), header
 train_data, test_data = list(), list()
 
 timesteps = 24
-num_input = 12
+num_input = 6
 
-for i in range(24, len(train_data_raw)):
+"""
+Column 0: history power
+Column 3: B0062T
+"""
+
+for i in range(timesteps, len(train_data_raw)):
     temp_row = list()
     pf = list()
     for j in range(0, timesteps):
         pf.append(train_data_raw[i - j][0])
+        
     pf = np.array(pf)
     pf = fft(pf)
     ang_pf = np.angle(pf).tolist()
     abs_pf = np.abs(pf).tolist()
     temp_row.extend(train_data_raw[i].tolist())
+    if train_data_raw[i][3] >= train_data_raw[i - 1][3] and train_data_raw[i - 1][3] != 0:
+        temp_row[3] = train_data_raw[i][3] - train_data_raw[i - 1][3]
+        
     temp_row.extend(abs_pf)
     temp_row.extend(ang_pf)
+    
     train_data.append(temp_row)
 
-for i in range(24, len(test_data_raw)):
+for i in range(timesteps, len(test_data_raw)):
     
     temp_row = list()
     pf = list()
@@ -45,6 +55,8 @@ for i in range(24, len(test_data_raw)):
     temp_row.extend(test_data_raw[i].tolist())
     temp_row.extend(abs_pf)
     temp_row.extend(ang_pf)
+    if test_data_raw[i][3] >= test_data_raw[i - 1][3] and test_data_raw[i - 1][3] != 0:
+        temp_row[3] = test_data_raw[i][3] - test_data_raw[i - 1][3]
     test_data.append(temp_row)
 
 train_target = train_target_raw[timesteps:]

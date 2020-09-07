@@ -9,9 +9,9 @@ class Dataset(object):
     def __init__(self, path, timesteps):
         self.data_path = path
         self.timesteps = timesteps
-        self.train_data_raw = pd.read_excel(os.path.join(path, "train_in.xlsx"), header=None).values
+        self.train_data_raw = pd.read_excel(os.path.join(path, "train_in.xlsx"), header=None).values[:, :6]
         self.train_target_raw = pd.read_excel(os.path.join(path, "train_out.xlsx"), header=None).values
-        self.test_data_raw = pd.read_excel(os.path.join(path, "test_in.xlsx"), header=None).values
+        self.test_data_raw = pd.read_excel(os.path.join(path, "test_in.xlsx"), header=None).values[:, :6]
         self.test_target_raw = pd.read_excel(os.path.join(path, "test_out.xlsx"), header=None).values
         self.train_data, self.train_target = self.process_train()
         self.test_data, self.test_target = self.process_test()
