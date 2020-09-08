@@ -19,7 +19,7 @@ ksize         = 3
 levels        = 5
 n_classes     = 1
 timesteps     = 24
-num_input     = 6
+num_input     = 8
 learning_rate = 0.02
 
 torch.cuda.set_device(GPU)
