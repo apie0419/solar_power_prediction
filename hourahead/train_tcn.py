@@ -17,11 +17,14 @@ dropout       = 0.1
 epoches       = 500
 ksize         = 3
 levels        = 5
-n_classes     = 1
-timesteps     = 24
-num_input     = 8
+n_classes     = 1                  ### output dimensions
+timesteps     = 24                 ### historic data size
+num_input     = 16                 ### feature dimensions
 learning_rate = 0.02
+seed          = 0
 
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
 torch.cuda.set_device(GPU)
 
 base_path = os.path.dirname(os.path.abspath(__file__))

@@ -10,13 +10,17 @@ import os, pandas as pd, numpy as np
 
 GPU           = 0
 batch_size    = 64
-hidden_units  = 12
-learning_rate = 0.002
+hidden_units  = 32
+learning_rate = 0.02
 n_layers      = 3
 epoches       = 500
-output_dims   = 1
-timesteps     = 24
-num_input     = 8
+output_dims   = 1           ### output dimensions
+timesteps     = 24          ### historic data size
+num_input     = 16          ### feature dimensions
+seed          = 0
+
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
 
 torch.cuda.set_device(GPU)
 

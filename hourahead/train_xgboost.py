@@ -10,9 +10,12 @@ base_path = os.path.dirname(os.path.abspath(__file__))
 
 data_path = os.path.join(base_path, "../data/solar")
 
-timesteps = 24
-num_input = 8
-num_output = 1
+if not os.path.exists(os.path.join(base_path, "Output")):
+    os.mkdir(os.path.join(base_path, "Output"))
+
+timesteps = 24     ### feature dimensions
+num_input = 16     ### historic data size
+num_output = 1     ### output dimensions
 
 dataset = Dataset(data_path, timesteps)
 train_data = np.array(dataset.train_data).reshape(-1, num_input * timesteps)
