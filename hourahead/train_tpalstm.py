@@ -16,7 +16,7 @@ n_layers      = 2
 epoches       = 500
 output_dims   = 1           ### output dimensions
 timesteps     = 24          ### historic data size
-num_input     = 12          ### feature dimensions
+num_input     = 22          ### feature dimensions
 seed          = 0
 
 torch.manual_seed(seed)
