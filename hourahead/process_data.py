@@ -19,7 +19,8 @@ train_data, test_data = list(), list()
 
 timesteps = 24
 num_input = 6
-reduction_size = 10
+reduction_size = 2
+freqdom_size = 3
 
 """
 Column 0: history power
@@ -47,22 +48,32 @@ for i in range(timesteps, len(train_data_raw)):
         temp_row[3] = train_data_raw[i][3] - train_data_raw[i - 1][3]
         
     ### Method 1
-    abs_pf.extend(ang_pf[:int(timesteps/2)])
-    fre_data.append(abs_pf)
+    # data = list()
+    # data.extend(abs_pf[:int(timesteps/2)+1])
+    # data.extend(ang_pf[:int(timesteps/2)+1])
+    # fre_data.append(data)
 
     ### Method 2
-    # abs_data.append(abs_pf[:int(timesteps/2)])
-    # ang_data.append(ang_pf[:int(timesteps/2)])
+    # abs_data.append(abs_pf[:int(timesteps/2)+1])
+    # ang_data.append(ang_pf[:int(timesteps/2)+1])
+
+    ### Method3
+    t = np.fft.fftfreq(timesteps)[:int(timesteps/2)+1]
+    indexes = np.array(abs_pf[:int(timesteps/2)+1]).argsort()
+    for idx in indexes[:freqdom_size]:
+        temp_row.append(t[idx])
+        temp_row.append(abs_pf[idx])
+        temp_row.append(ang_pf[idx])
     
     train_data.append(temp_row)
 
 train_data = np.array(train_data)
 
 ### Method 1
-fre_data = np.array(fre_data)
-pca1.fit(fre_data)
-fre_data = pca1.fit_transform(fre_data)
-train_data = np.append(train_data, fre_data, axis=1)
+# fre_data = np.array(fre_data)
+# pca1.fit(fre_data)
+# fre_data = pca1.fit_transform(fre_data)
+# train_data = np.append(train_data, fre_data, axis=1)
 
 ### Method 2
 # abs_data = np.array(abs_data)
@@ -74,7 +85,7 @@ train_data = np.append(train_data, fre_data, axis=1)
 # train_data = np.append(train_data, abs_data, axis=1)
 # train_data = np.append(train_data, ang_data, axis=1)
 
-print (pca1.explained_variance_ratio_.sum())
+# print (pca1.explained_variance_ratio_.sum())
 
 abs_data = list()
 ang_data = list()
@@ -96,22 +107,32 @@ for i in range(timesteps, len(test_data_raw)):
     # temp_row.extend(abs_pf)
     # temp_row.extend(ang_pf)
     ### Method 1
-    abs_pf.extend(ang_pf[:int(timesteps/2)])
-    fre_data.append(abs_pf)
+    # data = list()
+    # data.extend(abs_pf[:int(timesteps/2)+1])
+    # data.extend(ang_pf[:int(timesteps/2)+1])
+    # fre_data.append(data)
     
     ### Method 2
-    # abs_data.append(abs_pf[:int(timesteps/2)])
-    # ang_data.append(ang_pf[:int(timesteps/2)])
+    # abs_data.append(abs_pf[:int(timesteps/2)+1])
+    # ang_data.append(ang_pf[:int(timesteps/2)+1])
     
+    ### Method 3
+    t = np.fft.fftfreq(timesteps)[:int(timesteps/2)+1]
+    indexes = np.array(abs_pf[:int(timesteps/2)+1]).argsort()
+    for idx in indexes[:freqdom_size]:
+        temp_row.append(t[idx])
+        temp_row.append(abs_pf[idx])
+        temp_row.append(ang_pf[idx])
+
     test_data.append(temp_row)
 
 test_data = np.array(test_data)
 
 ### Method 1
-fre_data = np.array(fre_data)
-pca1.fit(fre_data)
-fre_data = pca1.fit_transform(fre_data)
-test_data = np.append(test_data, fre_data, axis=1)
+# fre_data = np.array(fre_data)
+# pca1.fit(fre_data)
+# fre_data = pca1.fit_transform(fre_data)
+# test_data = np.append(test_data, fre_data, axis=1)
 
 ### Method 2
 # abs_data = np.array(abs_data)
@@ -131,10 +152,13 @@ test_target_df = pd.DataFrame(test_target)
 
 
 ### Method 1
-for i in range(num_input, reduction_size + num_input):
+# for i in range(num_input, reduction_size + num_input):
 
 ### Method 2
 # for i in range(num_input, reduction_size * 2 + num_input):
+
+### Method 3
+for i in range(num_input, freqdom_size * 3 + num_input):
 
     train_max, train_min = train_data_df[i].max(), train_data_df[i].min()
     test_max, test_min = test_data_df[i].max(), test_data_df[i].min()

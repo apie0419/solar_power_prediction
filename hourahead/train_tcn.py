@@ -19,7 +19,7 @@ ksize         = 3
 levels        = 5
 n_classes     = 1                  ### output dimensions
 timesteps     = 24                 ### historic data size
-num_input     = 16                 ### feature dimensions
+num_input     = 12                 ### feature dimensions
 learning_rate = 0.02
 seed          = 0
 

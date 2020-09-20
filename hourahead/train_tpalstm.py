@@ -12,11 +12,11 @@ GPU           = 0
 batch_size    = 64
 hidden_units  = 32
 learning_rate = 0.02
-n_layers      = 3
+n_layers      = 2
 epoches       = 500
 output_dims   = 1           ### output dimensions
 timesteps     = 24          ### historic data size
-num_input     = 16          ### feature dimensions
+num_input     = 12          ### feature dimensions
 seed          = 0
 
 torch.manual_seed(seed)
