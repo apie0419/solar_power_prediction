@@ -10,27 +10,28 @@ conda env create -f environment.yml -n <env_name>
 
 ## Run Code Step by Step
 
-1. Process Rad Prediction Training Data
+1. Produce Training Data, Apply CWT and PCA.
 
 ```
-python process_rad_data.py
+python process_data.py
 ```
 
-2. Train Model to Predict Rad
+2. Train Model to Predict Power
+
+- TPA-LSTM
 
 ```
-python train_rad_xgboost.py
+python train_tpalstm.py
 ```
 
-3. Process Solar Power Prediction Training Data
+- TCN
 
 ```
-python process_power_data.py
+python train_tcn.py
 ```
 
-4. Train Model to Predict Solar Power
+- XGBoost
 
 ```
-python train_power_xgboost.py
+python train_xgboost.py
 ```
-

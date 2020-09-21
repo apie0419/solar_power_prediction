@@ -1,3 +1,4 @@
+name: wind
 channels:
   - main
   - conda-forge
@@ -9,8 +10,9 @@ dependencies:
   - astor=0.8.0=py36_0
   - blas=1.0=mkl
   - c-ares=1.15.0=h7b6447c_1001
-  - ca-certificates=2020.1.1=0
-  - certifi=2020.4.5.1=py36_0
+  - ca-certificates=2020.7.22=0
+  - certifi=2020.6.20=py36_0
+  - cffi=1.14.0=py36h2e261b9_0
   - cudatoolkit=10.0.130=0
   - cudnn=7.6.5=cuda10.0_0
   - cupti=10.0.130=0
@@ -35,38 +37,44 @@ dependencies:
   - mkl_random=1.1.0=py36hd6b4f25_0
   - mock=4.0.1=py_1
   - ncurses=6.2=he6710b0_0
-  - openssl=1.1.1f=h7b6447c_0
+  - ninja=1.10.1=py36hfd86e86_0
+  - numpy-base=1.19.1=py36hfa32c7d_0
+  - openssl=1.1.1g=h7b6447c_0
   - pip=20.0.2=py36_1
   - protobuf=3.11.4=py36he6710b0_0
+  - pycparser=2.20=py_2
   - python=3.6.10=hcf32534_1
+  - pytorch=1.1.0=cuda100py36he554f03_0
   - readline=8.0=h7b6447c_0
   - scipy=1.4.1=py36h0b6359f_0
   - setuptools=46.1.3=py36_0
   - six=1.14.0=py36_0
   - sqlite=3.31.1=h7b6447c_0
-  - tensorboard=1.13.1=py36hf484d3e_0
-  - tensorflow=1.13.1=gpu_py36h3991807_0
-  - tensorflow-base=1.13.1=gpu_py36h8d69cac_0
-  - tensorflow-estimator=1.13.0=py_0
-  - tensorflow-gpu=1.13.1=h0d30ee6_0
   - termcolor=1.1.0=py36_1
   - tk=8.6.8=hbc83047_0
   - werkzeug=1.0.1=py_0
   - wheel=0.34.2=py36_0
   - xz=5.2.4=h14c3975_4
+  - yaml=0.1.7=had09818_2
   - zlib=1.2.11=h7b6447c_3
   - pip:
     - cycler==0.10.0
+    - et-xmlfile==1.0.1
+    - jdcal==1.4.1
     - joblib==0.14.1
     - kiwisolver==1.2.0
     - matplotlib==3.2.1
     - numpy==1.18.2
+    - openpyxl==3.0.4
     - pandas==1.0.3
     - pyparsing==2.4.7
     - python-dateutil==2.8.1
     - pytz==2019.3
+    - pywavelets==1.1.1
     - scikit-learn==0.22.2.post1
     - sklearn==0.0
+    - tqdm==4.48.2
     - xgboost==1.0.0
     - xlrd==1.2.0
+prefix: /home/apie/.conda/envs/wind
 
