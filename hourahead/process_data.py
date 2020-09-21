@@ -19,7 +19,7 @@ train_data, test_data = list(), list()
 
 timesteps = 24
 num_input = 6
-reduction_size = 13
+reduction_size = 17
 scales = 3
 
 """
