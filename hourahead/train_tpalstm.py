@@ -5,24 +5,26 @@ from matplotlib import pyplot as plt
 from utils import Dataset, energyDataset
 from tpalstm import TPALSTM
 
-import torch, torch.nn.functional as F
-import os, pandas as pd, numpy as np
+import torch, random
+import os, pandas as pd, numpy as np, torch.nn.functional as F
 
 GPU           = 0
 batch_size    = 64
-hidden_units  = 32
-learning_rate = 0.02
-n_layers      = 2
-epoches       = 500
+hidden_units  = 12
+learning_rate = 0.002
+n_layers      = 3
+epoches       = 300
 output_dims   = 1           ### output dimensions
 timesteps     = 24          ### historic data size
-num_input     = 22          ### feature dimensions
+num_input     = 23          ### feature dimensions
 seed          = 0
 
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
-
+np.random.seed(seed)
+random.seed(seed)
 torch.cuda.set_device(GPU)
+torch.backends.cudnn.deterministic=True
 
 base_path = os.path.dirname(os.path.abspath(__file__))
 

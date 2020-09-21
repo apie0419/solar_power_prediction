@@ -5,27 +5,30 @@ from matplotlib import pyplot as plt
 from utils import Dataset, energyDataset
 from tcn import TCN
 
-import pandas as pd, numpy as np
-import torch, os, torch.nn.functional as F
+import pandas as pd, numpy as np, torch.nn.functional as F
+import torch, os, random
 
 base_path = os.path.dirname(os.path.abspath(__file__))
 
 GPU           = 0
 batch_size    = 64
-hidden_units  = 24
+hidden_units  = 64
 dropout       = 0.1
 epoches       = 500
 ksize         = 3
 levels        = 5
 n_classes     = 1                  ### output dimensions
 timesteps     = 24                 ### historic data size
-num_input     = 22                 ### feature dimensions
+num_input     = 19                 ### feature dimensions
 learning_rate = 0.02
 seed          = 0
 
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+random.seed(seed)
 torch.cuda.set_device(GPU)
+torch.backends.cudnn.deterministic=True
 
 base_path = os.path.dirname(os.path.abspath(__file__))
 
