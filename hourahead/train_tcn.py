@@ -17,9 +17,9 @@ dropout       = 0.1
 epoches       = 300
 ksize         = 3
 levels        = 5
-n_classes     = 1                  ### output dimensions
+n_classes     = 2                  ### output dimensions
 timesteps     = 24                 ### historic data size
-num_input     = 23                 ### feature dimensions
+num_input     = 21                 ### feature dimensions
 learning_rate = 0.02
 seed          = 1
 
@@ -83,14 +83,14 @@ with torch.no_grad():
     train_data = train_data.cuda()
     train_preds = model(train_data)
     train_preds = train_preds.data.cpu().numpy()
-    train_loss = round(np.sqrt(np.mean(np.square(train_target - train_preds))) * 100., 2)
+    train_loss = round(np.sqrt(np.mean(np.square(train_target[:, 0] - train_preds[:, 0]))) * 100., 2)
     test_data = torch.from_numpy(np.array(dataset.test_data).astype(np.float32)).float()
     test_target = np.array(dataset.test_target).astype(np.float32)
     test_data = test_data.reshape(-1, num_input, timesteps)
     test_data = test_data.cuda()
     test_preds = model(test_data)
     test_preds = test_preds.data.cpu().numpy()
-    test_loss = round(np.sqrt(np.mean(np.square(test_target - test_preds))) * 100., 2)
+    test_loss = round(np.sqrt(np.mean(np.square(test_target[:, 0] - test_preds[:, 0]))) * 100., 2)
 
 print (f"Train RMSE Loss: {train_loss}%, Test RMSE Loss: {test_loss}%")
 

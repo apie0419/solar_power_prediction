@@ -1,4 +1,4 @@
-from sklearn.decomposition import PCA
+from sklearn.decomposition import KernelPCA
 from matplotlib import pyplot as plt
 import pandas as pd, numpy as np, os
 import pywt
@@ -19,7 +19,7 @@ train_data, test_data = list(), list()
 
 timesteps = 24
 num_input = 6
-reduction_size = 17
+reduction_size = 15
 scales = 3
 
 """
@@ -27,7 +27,7 @@ Column 0: history power
 Column 3: B0062T
 """
 
-pca = PCA(n_components=reduction_size)
+pca = KernelPCA(n_components=reduction_size, kernel="rbf")
 fre_data = list()
 
 for i in range(timesteps, len(train_data_raw)):
@@ -53,8 +53,6 @@ fre_data = np.array(fre_data)
 pca.fit(fre_data)
 fre_data = pca.fit_transform(fre_data)
 train_data = np.append(train_data, fre_data, axis=1)
-
-print (pca.explained_variance_ratio_.sum())
 
 fre_data = list()
 
